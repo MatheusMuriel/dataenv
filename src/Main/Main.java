@@ -19,19 +19,24 @@ import org.quartz.impl.StdSchedulerFactory;
 public class Main {
 
     //Segundos, Minutos, Horas, Dia do Mês, Mês, Dia da Semana e Ano (Opcional)
-    private static final String DATA = "0/30 * * * * ?"; 
+    private static final String DATA = "0 23 * * * ?";
     private static final String GRUPO = "group01";
     private static final String EMAIL = "carlos.goiani@moinhoarapongas.com.br";
+    private static Scheduler scheduler;
+    private static JobDetail job;
+    private static Trigger trigger;
 
     public static void main(String[] args) {
+
         SchedulerFactory shedFact = new StdSchedulerFactory();
+
         try {
-            Scheduler scheduler = shedFact.getScheduler();
+            scheduler = shedFact.getScheduler();
             scheduler.start();
-            JobDetail job = JobBuilder.newJob(ValidadorJob.class)
+            job = JobBuilder.newJob(ValidadorJob.class)
                     .withIdentity("validadorJOB", GRUPO)
                     .build();
-            Trigger trigger = TriggerBuilder.newTrigger()
+            trigger = TriggerBuilder.newTrigger()
                     .withIdentity("validadorTRIGGER", GRUPO)
                     .withSchedule(CronScheduleBuilder.cronSchedule(DATA))
                     .build();
