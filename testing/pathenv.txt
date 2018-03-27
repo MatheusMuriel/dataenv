@@ -1,0 +1,2 @@
+ORIGEM;origem
+DESTINO;destino

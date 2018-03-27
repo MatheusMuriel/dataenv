@@ -1,0 +1,2 @@
+ORIGEM;testing\origem
+DESTINO;testing\destino
