@@ -19,7 +19,7 @@ import org.quartz.impl.StdSchedulerFactory;
 public class Main {
 
     //Segundos, Minutos, Horas, Dia do Mês, Mês, Dia da Semana e Ano (Opcional)
-    private static final String DATA = "0 23 * * * ?";
+    private static final String DATA = "0 0 23 * * ?";
     private static final String GRUPO = "group01";
     private static final String EMAIL = "carlos.goiani@moinhoarapongas.com.br";
     private static Scheduler scheduler;
