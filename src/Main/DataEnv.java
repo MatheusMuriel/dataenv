@@ -16,9 +16,12 @@ import java.io.FileReader;
 import java.util.List;
 import Tratamentos.TratamentoEmail;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.mail.EmailException;
 
@@ -35,7 +38,7 @@ public class DataEnv {
     private static final String CAMINHO = "pathenv.txt";
     private static final String EMAIL = "carlos.goiani@moinhoarapongas.com.br";
 
-    public static void moverDATAENV(){
+    public static void moverDATAENV() {
         sourceDataenv = lerCaminho().get(0);
         destinoDataenv = lerCaminho().get(1);
 
@@ -57,8 +60,10 @@ public class DataEnv {
 
             if (!copiados.isEmpty()) {
                 enviarEmail("Copia DATAENV", geraMensagem(copiados), EMAIL);
+                System.out.println("\n\r\n\r\n\r Arquivos copiados com sucesso \r\n" + getDataAtual());
             } else {
                 enviarEmail("Copia DATAENV", "Nenhum arquivo copiado, Checar.", EMAIL);
+                System.out.println("\n\r\n\r\n\r Nenhum arquivo copiado \r\n" + getDataAtual());
             }
 
         } catch (IOException | NullPointerException e) {
@@ -66,7 +71,7 @@ public class DataEnv {
                     + CAMINHO, e.getMessage(), EMAIL);
         }
     }
-    
+
     /**
      * Faz leitura do arquivo TXT que está contido no mesmo diretorio e retorna
      *
@@ -80,7 +85,7 @@ public class DataEnv {
         BufferedReader bf;
 
         caminho = new File(CAMINHO).getAbsoluteFile();
-        
+
         try {
             lerCaminho = new FileReader(caminho);
             String line;
@@ -131,13 +136,24 @@ public class DataEnv {
      * @return retorna uma String contendo as informal
      */
     private static String geraMensagem(List<String> copiados) {
-        String mensagem = "Arquivos copiados com sucesso nada data de : "
-                + LocalDate.now() + "\r\n\r\n";
+        String mensagem = "Arquivos copiados com sucesso na da data de : "
+                + getDataAtual() + "\r\n\r\n";
 
         for (String copiado : copiados) {
             mensagem += copiado + "\r\n";
         }
 
         return mensagem;
+    }
+
+    /**
+     * Traz a data atual de acordo com o padrão brasileiro
+     *
+     * @return String com data atual
+     */
+    private static String getDataAtual() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
+                .withLocale(new Locale("pt", "br")));
+
     }
 }
