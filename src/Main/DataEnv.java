@@ -36,7 +36,7 @@ public class DataEnv {
     private static String sourceDataenv;
     private static String destinoDataenv;
     private static final String CAMINHO = "pathenv.txt";
-    private static final String EMAIL = "carlos.goiani@moinhoarapongas.com.br";
+    private static final String EMAIL = "ti@moinhoarapongas.com.br";
 
     public static void moverDATAENV() {
         sourceDataenv = lerCaminho().get(0);
